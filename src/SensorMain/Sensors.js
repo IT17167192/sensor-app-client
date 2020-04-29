@@ -39,8 +39,12 @@ class Sensors extends Component {
         this.getSensorState();
         this.state.sensors.map(sensor => {
             let updation = sensor;
-            updation.co2Level = Math.ceil(Math.random() * Math.floor(10));
-            updation.smokeLevel = Math.ceil(Math.random() * Math.floor(10));
+
+            if(updation.status === 1){
+                updation.co2Level = Math.ceil(Math.random() * Math.floor(10));
+                updation.smokeLevel = Math.ceil(Math.random() * Math.floor(10));
+            }
+
             this.updateSensorState(sensor.id, updation);
         });
     }
