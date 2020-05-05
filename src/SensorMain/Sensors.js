@@ -39,20 +39,29 @@ class Sensors extends Component {
         this.getSensorState();
         this.state.sensors.map(sensor => {
             let updation = sensor;
-
-            if(updation.status === 1){
-                updation.co2Level = Math.ceil(Math.random() * Math.floor(10));
-                updation.smokeLevel = Math.ceil(Math.random() * Math.floor(10));
-            }
-
-            this.updateSensorState(sensor.id, updation);
+            return fetch(`http://localhost:8080/api/sensor/${sensor.id}`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(result => {
+                    if(result.status === 1){
+                        console.log("status active");
+                        updation.co2Level = Math.ceil(Math.random() * Math.floor(10));
+                        updation.smokeLevel = Math.ceil(Math.random() * Math.floor(10));
+                        updation.status = 1;
+                        this.updateSensorState(sensor.id, updation);
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
         });
     }
 
     componentDidMount() {
         this.interval = setInterval(() => {
             this.preformDummyUpdate();
-        }, 3000);
+        }, 5000);
     }
 
     render() {
