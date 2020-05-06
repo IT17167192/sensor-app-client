@@ -11,6 +11,8 @@ class Sensor extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        //in order to catch the updated props
+        //if there is a change, componentWillReceiveProps change the relevant sensor state
         this.setState({
             co2Level : nextProps.co2Level,
             smokeLevel: nextProps.smokeLevel
